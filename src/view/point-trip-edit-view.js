@@ -1,6 +1,6 @@
 import {createElement} from '../render.js';
 
-function createPointEventEditTemplate() {
+function createPointTripEditTemplate() {
   return (
     `<li class="trip-events__item">
     <form class="event event--edit" action="#" method="post">
@@ -160,9 +160,9 @@ function createPointEventEditTemplate() {
   );
 }
 
-export default class PointEventEditView {
+export default class PointTripEditView {
   getTemplate() {
-    return createPointEventEditTemplate();
+    return createPointTripEditTemplate();
   }
 
   getElement() {
