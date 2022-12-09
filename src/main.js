@@ -1,6 +1,7 @@
 import FilterView from './view/filter-view.js';
 import {render} from './render.js';
 import PointsTripPresenter from './presenter/points-trip-presenter.js';
+import './mocks/data.js';
 
 const siteHeaderElement = document.querySelector('.page-header');
 const siteMainElement = document.querySelector('.page-main');
