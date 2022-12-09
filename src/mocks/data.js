@@ -5,8 +5,6 @@ import {
   increaseRandomDate,
 } from '../util.js';
 
-import dayjs from 'dayjs';
-
 const TRIP_TYPES = ['taxi', 'bus', 'train', 'ship', 'drive', 'flight', 'check-in', 'sightseeing', 'restaurant'];
 const DESCRIPTIONS = [
   'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
@@ -41,15 +39,15 @@ const getOffersData = () => {
 
 // Получает случаный массив офферов для типа поездки
 const getRandomOffersData = () => {
-  const randomArrayOffers = [];
+  const randomOffers = [];
   const offersData = getOffersData();
   for (let i = 0; i < getRandomInt(3, 5); i++) {
     const randomOffer = getRandomElementArray(offersData);
-    if (!randomArrayOffers.includes(randomOffer)) {
-      randomArrayOffers.push(randomOffer);
+    if (!randomOffers.includes(randomOffer)) {
+      randomOffers.push(randomOffer);
     }
   }
-  return randomArrayOffers;
+  return randomOffers;
 };
 
 // Генерирует оффер по типу поездки
@@ -110,15 +108,15 @@ const generatePointData = () => {
   return {
     id: '',
     price: getRandomInt(50, 1000),
-    dateFrom: dayjs(date).format('YYYY-MM-DD[T]HH:mm:ss.SSS[Z]'),
-    dateTo: dayjs(increaseRandomDate(date)).format('YYYY-MM-DD[T]HH:mm:ss.SSS[Z]'),
+    dateFrom: date,
+    dateTo: increaseRandomDate(date),
     destination: '',
     offers: [],
     type: TRIP_TYPES[getRandomInt(0, TRIP_TYPES.length - 1)],
   };
 };
 
-const getPointData = (offers, cities) => {
+const createPointsData = (offers, cities) => {
   const data = [...new Array(cities.length)].map(() => generatePointData());
   data.forEach((point, index) => {
     point.id = index + 1;
@@ -132,11 +130,10 @@ const getPointData = (offers, cities) => {
   return data;
 };
 
-console.log(getPointData(getOffersByTypeData(),CITIES));
+const offersByTypeData = getOffersByTypeData();
+
+const getPointsData = () => createPointsData(offersByTypeData, CITIES);
 
 export {
-  getPointData,
-  getDestinationsData,
-  getOffersByTypeData,
-  CITIES,
+  getPointsData,
 };

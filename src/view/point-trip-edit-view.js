@@ -1,6 +1,15 @@
 import {createElement} from '../render.js';
+import {getDateFormat} from '../util.js';
 
-function createPointTripEditTemplate() {
+function createPointTripEditTemplate(points) {
+
+  const {dateFrom, dateTo, type, destination, price, offers} = points;
+
+  // const createTripTypeItem = ( isChecked = false) => `<div class="event__type-item">
+  //   <input id="event-type-${type}-1" class="event__type-input  visually-hidden" type="radio" name="event-type" value="${type}" ${isChecked ? 'checked' : ''}>
+  //   <label class="event__type-label  event__type-label--${type}" for="event-type-${type}-1">${type}</label>
+  //   </div>`;
+
   return (
     `<li class="trip-events__item">
     <form class="event event--edit" action="#" method="post">
@@ -8,7 +17,7 @@ function createPointTripEditTemplate() {
         <div class="event__type-wrapper">
           <label class="event__type  event__type-btn" for="event-type-toggle-1">
             <span class="visually-hidden">Choose event type</span>
-            <img class="event__type-icon" width="17" height="17" src="img/icons/flight.png" alt="Event type icon">
+            <img class="event__type-icon" width="17" height="17" src="img/icons/${type}.png" alt="Event type icon">
           </label>
           <input class="event__type-toggle  visually-hidden" id="event-type-toggle-1" type="checkbox">
 
@@ -66,7 +75,7 @@ function createPointTripEditTemplate() {
 
         <div class="event__field-group  event__field-group--destination">
           <label class="event__label  event__type-output" for="event-destination-1">
-            Flight
+            ${type}
           </label>
           <input class="event__input  event__input--destination" id="event-destination-1" type="text" name="event-destination" value="Chamonix" list="destination-list-1">
           <datalist id="destination-list-1">
@@ -78,10 +87,10 @@ function createPointTripEditTemplate() {
 
         <div class="event__field-group  event__field-group--time">
           <label class="visually-hidden" for="event-start-time-1">From</label>
-          <input class="event__input  event__input--time" id="event-start-time-1" type="text" name="event-start-time" value="18/03/19 12:25">
+          <input class="event__input  event__input--time" id="event-start-time-1" type="text" name="event-start-time" value="${getDateFormat(dateFrom)}">
           &mdash;
           <label class="visually-hidden" for="event-end-time-1">To</label>
-          <input class="event__input  event__input--time" id="event-end-time-1" type="text" name="event-end-time" value="18/03/19 13:35">
+          <input class="event__input  event__input--time" id="event-end-time-1" type="text" name="event-end-time" value="${getDateFormat(dateTo)}">
         </div>
 
         <div class="event__field-group  event__field-group--price">
@@ -89,7 +98,7 @@ function createPointTripEditTemplate() {
             <span class="visually-hidden">Price</span>
             &euro;
           </label>
-          <input class="event__input  event__input--price" id="event-price-1" type="text" name="event-price" value="160">
+          <input class="event__input  event__input--price" id="event-price-1" type="text" name="event-price" value="${price}">
         </div>
 
         <button class="event__save-btn  btn  btn--blue" type="submit">Save</button>
@@ -161,8 +170,12 @@ function createPointTripEditTemplate() {
 }
 
 export default class PointTripEditView {
+  constructor({point}) {
+    this.point = point;
+  }
+
   getTemplate() {
-    return createPointTripEditTemplate();
+    return createPointTripEditTemplate(this.point);
   }
 
   getElement() {
