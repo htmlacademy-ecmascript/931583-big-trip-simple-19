@@ -4,14 +4,14 @@ import {getDateISO, getDateHoursMinutes, getDateMonthDay} from '../util.js';
 function createPointTripTemplate(points) {
   const {dateFrom, dateTo, type, destination, price, offers} = points;
 
-  const createOfferElement = (offer) =>
+  const createOfferElementMarkup = (offer) =>
     `<li class="event__offer">
       <span class="event__offer-title">${offer.title}</span>
       &plus;&euro;&nbsp;
       <span class="event__offer-price">${offer.price}</span>
     </li>`;
 
-  const offersList = offers.map((item) => createOfferElement(item)).join(' ');
+  const offersListMarkup = offers.map((item) => createOfferElementMarkup(item)).join(' ');
 
   return (
     `<li class="trip-events__item">
@@ -33,7 +33,7 @@ function createPointTripTemplate(points) {
       </p>
       <h4 class="visually-hidden">Offers:</h4>
       <ul class="event__selected-offers">
-        ${offersList}
+        ${offersListMarkup}
       </ul>
       <button class="event__rollup-btn" type="button">
         <span class="visually-hidden">Open event</span>

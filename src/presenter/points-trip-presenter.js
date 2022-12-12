@@ -16,9 +16,12 @@ export default class PointsTripPresenter {
 
   init() {
     this.pointsList = [...this.pointsModel.getPoints()];
+    this.allDestinationsList = [...this.pointsModel.getAllDestinations()];
+    this.allOffersByTypeList = [...this.pointsModel.getAllOffersByType()];
+
     render(new SortView(), this.pointsContainer);
     render(this.pointsComponent, this.pointsContainer);
-    render(new PointTripEditView({point: this.pointsList[0]}),this.pointsComponent.getElement());
+    render(new PointTripEditView({point: this.pointsList[0], destinations: this.allDestinationsList, typies: this.allOffersByTypeList}),this.pointsComponent.getElement());
     for (let i = 1; i < this.pointsList.length; i++) {
       render(new PointTripView({point: this.pointsList[i]}), this.pointsComponent.getElement());
     }

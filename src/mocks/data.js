@@ -26,6 +26,7 @@ const generateOffer = (title, id) => ({
   id: id + 1,
   title,
   price: OFFER_PRICES[getRandomInt(0, OFFER_PRICES.length - 1)],
+  isChecked: Boolean(Math.round(Math.random())),
 });
 
 // Получает массив из всех офферов на основе заголовков офферов
@@ -103,6 +104,7 @@ const getDestinationsData = () => {
   return destinations;
 };
 
+// Генерирует точку назначения
 const generatePointData = () => {
   const date = getRandomDate();
   return {
@@ -116,6 +118,7 @@ const generatePointData = () => {
   };
 };
 
+// Получает массив из точек назначения на основе массива с городами
 const createPointsData = (offers, cities) => {
   const data = [...new Array(cities.length)].map(() => generatePointData());
   data.forEach((point, index) => {
@@ -131,9 +134,10 @@ const createPointsData = (offers, cities) => {
 };
 
 const offersByTypeData = getOffersByTypeData();
-
 const getPointsData = () => createPointsData(offersByTypeData, CITIES);
 
 export {
   getPointsData,
+  getDestinationsData,
+  offersByTypeData,
 };
