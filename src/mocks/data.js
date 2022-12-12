@@ -17,13 +17,12 @@ const DESCRIPTIONS = [
   'Sed sed nisi sed augue convallis suscipit in sed felis. Aliquam erat volutpat.',
   'Nunc fermentum tortor ac porta dapibus. In rutrum ac purus sit amet tempus.',
 ];
-const CITIES = ['Geneva', 'Amsterdam', 'Paris', 'London', 'Moscow', 'Helsinki', 'Oslo','Berlin', 'Rome'];
+const CITIES = ['Geneva', 'Amsterdam', 'Paris', 'London', 'Moscow', 'Helsinki', 'Oslo','Berlin', 'Rome', 'Budapest', 'Oslo'];
 const OFFER_TITLES = ['Order Uber', 'Rent a car', 'Add luggage', 'Switch to comfort', 'Add meal', 'Add breakfast', 'Book tickets'];
 const OFFER_PRICES = [20, 50, 100, 200, 350];
 
 // Генерирует оффер
-const generateOffer = (title, id) => ({
-  id: id + 1,
+const generateOffer = (title) => ({
   title,
   price: OFFER_PRICES[getRandomInt(0, OFFER_PRICES.length - 1)],
   isChecked: Boolean(Math.round(Math.random())),
@@ -33,7 +32,9 @@ const generateOffer = (title, id) => ({
 const getOffersData = () => {
   const offers = [];
   OFFER_TITLES.forEach((element, index) => {
-    offers.push(generateOffer(element, index));
+    const offer = generateOffer(element);
+    offer.id = index + 1;
+    offers.push(offer);
   });
   return offers;
 };
@@ -74,8 +75,8 @@ const generatePicture = () => ({
 
 // Получает массив из рандомных картинок
 const getPicturesData = () => {
-  const arrayPictures = [...new Array(getRandomInt(1, 5))];
-  return arrayPictures.map(() => generatePicture());
+  const pictures = [...new Array(getRandomInt(1, 5))];
+  return pictures.map(() => generatePicture());
 };
 
 // Получает описание точки маршрута из рандомных предложений
@@ -85,59 +86,41 @@ const getDescriptionDestination = () => {
 };
 
 // Генерирует объект пункта назначения
-const generateDestination = (name, id) => {
-  const destination = {
-    id: id + 1,
-    name,
-    description: getDescriptionDestination(),
-    pictures: getPicturesData(),
-  };
-  return destination;
-};
+const generateDestination = (name) => ({
+  name,
+  description: getDescriptionDestination(),
+  pictures: getPicturesData(),
+});
 
 // Получает массив из пунктов назначения
 const getDestinationsData = () => {
   const destinations = [];
   CITIES.forEach((element, index) => {
-    destinations.push(generateDestination(element, index));
+    const city = generateDestination(element);
+    city.id = index + 1;
+    destinations.push(city);
   });
   return destinations;
 };
 
-// Генерирует точку назначения
-const generatePointData = () => {
+// Генерирует точку маршрута
+const generatePoint = (offers, destinations) => {
   const date = getRandomDate();
+  const type = TRIP_TYPES[getRandomInt(0, TRIP_TYPES.length - 1)];
+  const typeOffers = offers.find((el) => el.type === type ).offers;
+
   return {
-    id: '',
     price: getRandomInt(50, 1000),
     dateFrom: date,
     dateTo: increaseRandomDate(date),
-    destination: '',
-    offers: [],
-    type: TRIP_TYPES[getRandomInt(0, TRIP_TYPES.length - 1)],
+    destination: getRandomElementArray(destinations).id,
+    offers: typeOffers,
+    type: type,
   };
 };
 
-// Получает массив из точек назначения на основе массива с городами
-const createPointsData = (offers, cities) => {
-  const data = [...new Array(cities.length)].map(() => generatePointData());
-  data.forEach((point, index) => {
-    point.id = index + 1;
-    offers.forEach((offerType) => {
-      if (point.type === offerType.type) {
-        point.offers = offerType.offers;
-      }
-    });
-    point.destination = cities[index];
-  });
-  return data;
-};
-
-const offersByTypeData = getOffersByTypeData();
-const getPointsData = () => createPointsData(offersByTypeData, CITIES);
-
 export {
-  getPointsData,
+  generatePoint,
   getDestinationsData,
-  offersByTypeData,
+  getOffersByTypeData,
 };

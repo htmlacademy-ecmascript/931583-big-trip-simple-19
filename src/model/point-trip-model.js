@@ -1,16 +1,21 @@
 import {
-  getPointsData,
+  generatePoint,
   getDestinationsData,
-  offersByTypeData
+  getOffersByTypeData
 } from '../mocks/data.js';
 
+const TASK_COUNT = 8;
+
+const offersByType = getOffersByTypeData();
+const destinations = getDestinationsData();
+const getPoint = () => generatePoint(offersByType,destinations);
+
 export default class PointsModel {
-  points = getPointsData();
-  destinations = getDestinationsData();
-  offersByType = offersByTypeData;
+  offersByType = offersByType;
+  destinations = destinations;
+  points = Array.from({length: TASK_COUNT}, getPoint);
 
   getPoints() {
-    console.log(this.points);
     return this.points;
   }
 
@@ -22,3 +27,4 @@ export default class PointsModel {
     return this.offersByType;
   }
 }
+

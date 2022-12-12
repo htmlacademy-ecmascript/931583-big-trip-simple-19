@@ -32,7 +32,8 @@ function createPointTripEditTemplate(point, destinations, typies) {
   const typeListMarkup = createTypeListMarkup();
   const destinationsListMarkup = destinations.map((city) => `<option value="${city.name}"></option>`).join(' ');
   const offersMarkup = offers.map((el) => createOfferMarkup(el)).join(' ');
-  const descriptionMarkup = destinations.find((el) => el.name === destination).description;
+  const destinationMarkup = destinations.find((el) => el.id === destination).name;
+  const descriptionMarkup = destinations.find((el) => el.id === destination).description;
 
   return (
     `<li class="trip-events__item">
@@ -58,7 +59,7 @@ function createPointTripEditTemplate(point, destinations, typies) {
           <label class="event__label  event__type-output" for="event-destination-1">
             ${type}
           </label>
-          <input class="event__input  event__input--destination" id="event-destination-1" type="text" name="event-destination" value="${destination}" list="destination-list-1">
+          <input class="event__input  event__input--destination" id="event-destination-1" type="text" name="event-destination" value="${destinationMarkup}" list="destination-list-1">
           <datalist id="destination-list-1">
             ${destinationsListMarkup}
           </datalist>
