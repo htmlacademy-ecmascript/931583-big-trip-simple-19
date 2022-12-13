@@ -22,15 +22,15 @@ export default class NewPointEditorView extends View {
       <form class="event event--edit" action="#" method="post">
       <header class="event__header">
         <${PointTypeView}></${PointTypeView}>
-        <${DestinationView} class="event__field-group--destination"></${DestinationView}>
-        <${DatesView} class="event__field-group--time"></${DatesView}>
-        <${BasePriceView} class="event__field-group--time"></${BasePriceView}>
+        <${DestinationView}></${DestinationView}>
+        <${DatesView}></${DatesView}>
+        <${BasePriceView}></${BasePriceView}>
         <button class="event__save-btn  btn  btn--blue" type="submit">Save</button>
         <button class="event__reset-btn" type="reset">Cancel</button>
       </header>
       <section class="event__details">
-        <${OffersView} class="event__section--offers"></${OffersView}>
-        <${DestinationDetailsView} class="event__section-title--destination"></${DestinationDetailsView}>
+        <${OffersView}></${OffersView}>
+        <${DestinationDetailsView}></${DestinationDetailsView}>
       </section>
       </form>
     `;
