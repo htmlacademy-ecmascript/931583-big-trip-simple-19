@@ -1,6 +1,7 @@
 /**
  *  @template Item
  */
+
 export default class Store {
   #base;
   #auth;
