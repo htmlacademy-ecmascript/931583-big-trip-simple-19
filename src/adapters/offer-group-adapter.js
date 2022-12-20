@@ -2,12 +2,15 @@ import Adapter from './adapter';
 
 export default class OfferGroupAdapter extends Adapter {
   /**
-   * @param {Partial<OfferGroup>} data
+   * @param {OfferGroup} data
    */
-  constructor(data = {}) {
+  constructor(data) {
     super();
 
-    this.id = String(data.type);
-    this.items = data.offers?.map(String);
+    this.id = data.type;
+    this.items = data.offers?.map((item) => ({
+      ...item,
+      id: String(item.id)
+    }));
   }
 }
