@@ -12,10 +12,10 @@ export const filterCallbackMap = {
  * @type {Record<string,SortCallback<PointAdapter>>}
  */
 export const sortCallbackMap = {
-  [SortType.DAY]: (point, nextPoint) => point.startDateAsNumber - nextPoint.endDateAsNumber,
+  [SortType.DAY]: (point, nextPoint) => point.startDateAsNumber - nextPoint.startDateAsNumber,
   [SortType.EVENT]: () => 0,
   [SortType.TIME]: () => 0,
-  [SortType.PRICE]: (point, nextPoint) => point.basePrice - nextPoint.basePrice,
+  [SortType.PRICE]: (point, nextPoint) => nextPoint.basePrice - point.basePrice,
   [SortType.OFFERS]: () => 0
 };
 
