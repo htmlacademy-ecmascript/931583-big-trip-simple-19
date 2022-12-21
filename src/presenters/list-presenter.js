@@ -13,9 +13,10 @@ export default class ListPresenter extends Presenter {
   }
 
   updateView() {
-    this.view.setItems(
-      this.pointsModel.list().map(this.createPointViewState, this)
-    );
+    const points = this.pointsModel.list();
+    const pointsViewStates = points.map(this.createPointViewState, this);
+
+    this.view.setItems(pointsViewStates);
   }
 
   /**
