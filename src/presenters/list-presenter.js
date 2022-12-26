@@ -10,12 +10,15 @@ export default class ListPresenter extends Presenter {
     super(...arguments);
 
     this.updateView();
+    this.pointsModel.addEventListener('filter', this.handlePointsModelFilter.bind(this));
+    this.pointsModel.addEventListener('sort', this.handlePointsModelSort.bind(this));
   }
 
   updateView() {
-    this.view.setItems(
-      this.pointsModel.list().map(this.createPointViewState, this)
-    );
+    const points = this.pointsModel.list();
+    const pointViewStates = points.map(this.createPointViewState, this);
+
+    this.view.setItems(pointViewStates);
   }
 
   /**
@@ -24,7 +27,14 @@ export default class ListPresenter extends Presenter {
   createPointViewState(point) {
     const destination = this.destinationsModel.findById(point.destinationId);
     const offerGroup = this.offerGroupsModel.findById(point.type);
-    const offerViewStates = offerGroup.items.filter((item) => point.offerIds.some((element) => element === item.id));
+    const offerViewStates = offerGroup.items
+      .filter((offer) =>
+        point.offerIds.includes(offer.id)
+      )
+      .map((offer) => ({
+        title: offer.title,
+        price: formatNumber(offer.price)
+      }));
 
     return {
       date: formatDate(point.startDate),
@@ -37,5 +47,13 @@ export default class ListPresenter extends Presenter {
       basePrice: formatNumber(point.basePrice),
       offers: offerViewStates
     };
+  }
+
+  handlePointsModelFilter() {
+    this.updateView();
+  }
+
+  handlePointsModelSort() {
+    this.updateView();
   }
 }
