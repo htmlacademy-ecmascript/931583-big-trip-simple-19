@@ -97,6 +97,14 @@
  */
 
 /**
+ * @typedef OfferToggleViewState
+ * @prop {string} id
+ * @prop {string} title
+ * @prop {string} price
+ * @prop {boolean} checked
+ */
+
+/**
  * @typedef OptionViewState
  * @prop {string} title
  * @prop {string} value
