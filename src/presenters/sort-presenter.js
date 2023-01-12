@@ -27,6 +27,8 @@ export default class SortPresenter extends Presenter {
   }
 
   handleViewChange() {
+    this.navigate('/');
+
     const sortType = this.view.getValue();
     this.pointsModel.setSort(sortCallbackMap[sortType]);
   }
