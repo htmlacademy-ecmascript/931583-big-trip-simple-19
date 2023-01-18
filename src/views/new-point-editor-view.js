@@ -58,7 +58,7 @@ export default class NewPointEditorView extends View {
    */
   createHtml() {
     return html`
-      <form class="event event--edit" action="#" method="post">
+      <form class="event event--edit" action="#" method="post" novalidate>
       <header class="event__header">
         <${PointTypeView}></${PointTypeView}>
         <${DestinationView}></${DestinationView}>
