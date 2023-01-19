@@ -33,6 +33,7 @@ const pointsModel = new CollectionModel({
   filter: filterCallbackMap[FilterType.FUTURE],
   sort: sortCallbackMap[SortType.DAY]
 });
+console.log(pointsModel);
 
 /**
  * @type {Store <Destination>}
