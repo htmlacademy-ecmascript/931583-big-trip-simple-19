@@ -4,7 +4,8 @@ import {formatNumber} from '../utils';
 import Presenter from './presenter';
 
 /**
- * @extends {Presenter<NewPointEditorView>}
+ * @template {NewPointEditorView} View
+ * @extends {Presenter<View>}
  */
 export default class NewPointEditorPresenter extends Presenter {
   constructor() {
@@ -78,11 +79,18 @@ export default class NewPointEditorPresenter extends Presenter {
   }
 
   /**
+   * @param {PointAdapter} point
+   */
+  async save(point) {
+    await this.pointsModel.add(point);
+  }
+
+  /**
    * @override
    */
   handleNavigation() {
     if (this.location.pathname === '/new') {
-      const point = this.pointsModel.item(5);
+      const point = this.pointsModel.item();
 
       point.type = PointType.BUS;
       point.destinationId = this.destinationsModel.item(7).id;
@@ -108,17 +116,21 @@ export default class NewPointEditorPresenter extends Presenter {
     this.view.awaitSave(true);
 
     try {
-      const point = this.pointsModel.item(5);
+      const point = this.pointsModel.item();
+      const destinationName = this.view.destinationView.getValue();
+      const destination = this.destinationsModel.findBy('name', destinationName);
+      const [startDate, endDate] = this.view.datesView.getValues();
 
       point.type = this.view.pointTypeView.getValue();
-      point.destinationId = this.destinationsModel.findBy('name', this.view.destinationView.getValue()).id;
-      point.startDate = this.view.datesView.getValues()[0];
-      point.endDate = this.view.datesView.getValues()[1];
+      point.destinationId = destination?.id;
+      point.startDate = startDate;
+      point.endDate = endDate;
       point.basePrice = this.view.basePriceView.getValue();
       point.offerIds = this.view.offersView.getValues();
 
-      this.navigate('/');
-      this.pointsModel.add(point);
+      await this.save(point);
+
+      this.view.close();
     }
     catch (exception) {
       this.view.shake();
