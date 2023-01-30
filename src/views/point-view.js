@@ -39,7 +39,11 @@ export default class PointView extends View {
         &euro;&nbsp;<span class="event__price-value">${state.basePrice}</span>
       </p>
       <h4 class="visually-hidden">Offers:</h4>
-      <ul class="event__selected-offers"></ul>
+      <ul class="event__selected-offers">
+        <li class="event__offer">
+          <span class="event__offer-title">No additional offers</span>
+        </li>
+      </ul>
       <button class="event__rollup-btn" type="button">
         <span class="visually-hidden">Open event</span>
       </button>
@@ -66,7 +70,9 @@ export default class PointView extends View {
   setOffers(states) {
     const offersHtml = states.map(this.createOfferHtml).join('');
 
-    this.querySelector('.event__selected-offers').innerHTML = offersHtml;
+    if (offersHtml) {
+      this.querySelector('.event__selected-offers').innerHTML = offersHtml;
+    }
   }
 
   /**
