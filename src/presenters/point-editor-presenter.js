@@ -18,6 +18,10 @@ export default class PointEditorPresenter extends NewPointEditorPresenter {
     await this.pointsModel.update(point);
   }
 
+  async delete (id) {
+    await this.pointsModel.delete(id);
+  }
+
   /**
    * @override
    */
@@ -40,6 +44,19 @@ export default class PointEditorPresenter extends NewPointEditorPresenter {
    */
   async handleViewReset(event) {
     event.preventDefault();
-    //
+
+    this.view.awaitDelete(true);
+
+    try {
+      await this.delete(this.view.dataset.id);
+
+      this.view.close();
+    }
+
+    catch(exception) {
+      this.view.shake();
+    }
+
+    this.view.awaitDelete(false);
   }
 }

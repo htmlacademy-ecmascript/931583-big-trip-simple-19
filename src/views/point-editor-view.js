@@ -1,3 +1,4 @@
+import {deleteButtonTextMap} from '../maps';
 import {html} from '../utils';
 import NewPointEditorView from './new-point-editor-view';
 
@@ -9,6 +10,8 @@ export default class PointEditorView extends NewPointEditorView {
 
     this.awaitDelete(false);
     this.querySelector('header').insertAdjacentHTML('beforeend', this.createCloseButtonHtml());
+
+    this.addEventListener('click', this.handleClick);
   }
 
   /**
@@ -43,7 +46,20 @@ export default class PointEditorView extends NewPointEditorView {
    * @param {boolean} flag
    */
   awaitDelete(flag) {
-    //
+    const text = deleteButtonTextMap[Number(flag)];
+
+    this.querySelector('.event__reset-btn').textContent = text;
+
+    this.uiBlockerView.toggle(flag);
+  }
+
+  /**
+   * @param {MouseEvent & {target: Element}} event
+   */
+  handleClick(event) {
+    if(event.target.closest('.event__rollup-btn')) {
+      this.close();
+    }
   }
 }
 
