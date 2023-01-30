@@ -79,6 +79,7 @@
 
 /**
  * @typedef PointViewState
+ * @prop {string} id
  * @prop {string} date
  * @prop {string} icon
  * @prop {string} title
@@ -97,5 +98,29 @@
  */
 
 /**
+ * @typedef OfferToggleViewState
+ * @prop {string} id
+ * @prop {string} title
+ * @prop {string} price
+ * @prop {boolean} checked
+ */
+
+/**
+ * @typedef OptionViewState
+ * @prop {string} title
+ * @prop {string} value
+ */
+
+/**
  * @typedef {import('./views/list-view').default} ListView
+ * @typedef {import('./views/point-view').default} PointView
+ * @typedef {import('./views/filter-view').default} FilterView
+ * @typedef {import('./views/sort-view').default} SortView
+ * @typedef {import('./views/new-point-editor-view').default} NewPointEditorView
+ * @typedef {import('./views/point-editor-view').default} PointEditorView
+ */
+
+/**
+ * @typedef {import('flatpickr/dist/types/instance').Instance} Calendar
+ * @typedef {import('flatpickr/dist/types/options').Options} CalendarConfig
  */
