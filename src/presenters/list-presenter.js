@@ -28,7 +28,7 @@ export default class ListPresenter extends Presenter {
     const pointsViews = this.view.setItems(pointViewStates);
 
     if (targetPoint) {
-      this.view.findById(targetPoint.id).fadeInLeft();
+      this.view.findById(targetPoint.id)?.fadeInLeft();
     }
     else {
       pointsViews.forEach((pointView, index) => {
