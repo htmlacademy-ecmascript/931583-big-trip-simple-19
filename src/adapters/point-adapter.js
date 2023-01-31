@@ -1,6 +1,6 @@
 import Adapter from './adapter';
 
-export default class PointsAdapter extends Adapter {
+export default class PointAdapter extends Adapter {
   /**
    * @param {Partial<Point>} data
    */
